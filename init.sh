@@ -8,8 +8,8 @@
 #gunicorn --bind='0.0.0.0:8080' hello:wsgi_application
 sudo /etc/init.d/mysql start
 mysql -uroot -e "CREATE DATABASE djbase;"
-mysql -uroot -e "CREATE USER 'django@localhost' IDENTIFIED BY 'pass123';"
-mysql -uroot -e "GRANT ALL ON djbase.* TO 'django@localhost';"
+mysql -uroot -e "CREATE USER 'django'@'localhost' IDENTIFIED BY 'pass123';"
+mysql -uroot -e "GRANT ALL ON djbase.* TO 'django'@'localhost';"
 mysql -uroot -e "FLUSH PRIVILEGES;"
 cd ~/web/ask
 python3 manage.py makemigrations qa
