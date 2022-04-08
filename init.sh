@@ -7,9 +7,10 @@
 #sudo /etc/init.d/gunicorn restart
 #gunicorn --bind='0.0.0.0:8080' hello:wsgi_application
 sudo /etc/init.d/mysql start
-mysql -uroot -e "create database web;"
-mysql -uroot -e "create user 'box'@'localhost' identified by '1234';"
-mysql -uroot -e "grant all privileges on stepic_web.* to 'box'@'localhost' with grant option;"
+mysql -uroot -e "CREATE DATABASE djbase;"
+mysql -uroot -e "CREATE USER 'django@localhost' IDENTIFIED BY 'pass123';"
+mysql -uroot -e "GRANT ALL ON djbase.* TO 'django@localhost';"
+mysql -uroot -e "FLUSH PRIVILEGES;"
 cd ~/web/ask
 python3 manage.py makemigrations qa
 python3 manage.py migrate
