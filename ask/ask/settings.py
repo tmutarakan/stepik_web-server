@@ -78,7 +78,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'djbase',
-        'USER': 'django@',
+        'USER': 'django',
         'PASSWORD': 'pass123',
         'HOST': 'localhost',
         'PORT': '',
