@@ -14,4 +14,4 @@ mysql -uroot -e "FLUSH PRIVILEGES;"
 cd ~/web/ask
 python3 manage.py makemigrations qa
 python3 manage.py migrate
-gunicorn --bind='0.0.0.0:8080' ask.wsgi
+#gunicorn --bind='0.0.0.0:8000' ask.wsgi

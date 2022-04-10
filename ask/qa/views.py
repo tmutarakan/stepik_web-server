@@ -40,9 +40,9 @@ def popular_questions(request, *args, **kwargs):
 
 @require_GET
 def question(request, question_id):
-    question_el = get_object_or_404(Question, pk=question_id)
+    question = get_object_or_404(Question, pk=question_id)
     answers = Answer.objects.filter(question=question_id)
     return render(request, 'qa/question.html', {
-        'question': question_el,
+        'question': question,
         'answers': answers
     })
