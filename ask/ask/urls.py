@@ -18,12 +18,12 @@ from django.conf.urls import url, include
 from qa import views
 
 urlpatterns = [
-    # url('admin/', admin.site.urls),
-    url(r'^$', views.test),
+    url('admin/', admin.site.urls),
+    url(r'^$', views.new_questions),
     url(r'^login/', views.test),
     url(r'^signup/', views.test),
-    url(r'^question/<int:id>/', views.test),
+    url(r'^question/<int:id>/', views.question),
     url(r'^ask/', views.test),
-    url(r'^popular/', views.test),
+    url(r'^popular/', views.popular_questions),
     url(r'^new/', views.test),
 ]
