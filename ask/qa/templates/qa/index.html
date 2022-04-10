@@ -1,4 +1,6 @@
 <h1>{{ title }} page {{ page.number }}</h1>
+<h1>{{ question.title }}</h1>
+<h2>{{ question.text }}</h2>
 {% for tag in page.object_list %}
     <li><a href="/question/{{ tag.id }}/">{{ tag }}</a></li>
 {% endfor %}
