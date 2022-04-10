@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_GET
-from models import Question, Answer
+from qa.models import Question, Answer
 
 
 # Create your views here.
