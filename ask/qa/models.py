@@ -24,8 +24,8 @@ class Question(models.Model):
     def __str__(self):
         return self.title
 
-    def get_url(self):
-        return reverse('single-question', kwargs={'question_id': self.pk})
+    #def get_url(self):
+    #    return reverse('single-question', kwargs={'question_id': self.pk})
 
 
 class Answer(models.Model):
