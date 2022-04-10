@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^ask/', views.test),
     url(r'^popular/', views.popular_questions),
     url(r'^new/', views.test),
-    url(r'^$', views.new_questions),
+    url(r'', views.new_questions),
 ]
