@@ -25,7 +25,7 @@ class Question(models.Model):
         return self.title
 
     def get_url(self):
-        return f'/question/{self.pk}/'
+        return '/question/{}/'.format(self.pk)
 
 
 class Answer(models.Model):
