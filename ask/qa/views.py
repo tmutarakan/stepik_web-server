@@ -49,6 +49,7 @@ def question(request, question_id):
         form = AnswerForm(request.POST)
         if form.is_valid():
             form.clean()
+            form._user = request.user
             form.save()
             HttpResponseRedirect('/question/%s/' % question_id)
     else:
@@ -65,6 +66,7 @@ def ask(request):
         form = AskForm(request.POST)
         if form.is_valid():
             form.clean()
+            form._user = request.user
             post = form.save()
             url = post.get_url()
             return HttpResponseRedirect(url)
