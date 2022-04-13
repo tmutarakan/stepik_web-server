@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_GET
 from django.http import HttpResponseRedirect
+from django.contrib.auth import authenticate, login
 from qa.models import Question, Answer
-from qa.forms import AskForm, AnswerForm
+from qa.forms import AskForm, AnswerForm, SignupForm, LoginForm
 
 
 # Create your views here.
@@ -69,3 +70,32 @@ def ask(request):
     else:
         form = AskForm()
     return render(request, 'qa/ask.html', {'form': form})
+
+
+def user_login(request):
+    error = ''
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        url = request.POST.get('continue', '/')
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(url)
+        else:
+            error = u'Неверный логин / пароль'
+
+    return render(request, 'qa/login.html', {'form': LoginForm(), 'error': error })
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            form.clean()
+            user = form.save()
+            login(request, user)
+            return HttpResponseRedirect('/')
+    else:
+        form = SignupForm()
+    return render(request, 'qa/signup.html', {'form': form})

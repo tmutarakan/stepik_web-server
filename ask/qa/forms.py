@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from qa.models import Question, Answer
 
 
@@ -10,6 +11,7 @@ class AskForm(forms.Form):
         return self.cleaned_data
 
     def save(self):
+        self.cleaned_data['author'] = self._user
         return Question.objects.create(**self.cleaned_data)
 
 
@@ -18,10 +20,22 @@ class AnswerForm(forms.Form):
     question = forms.ModelChoiceField(queryset=Question.objects.all())
 
     def clean(self):
-        # text = self.cleaned_data['text']
-        # if not text.is_valid():
-        #     raise forms.ValidationError('question text is wrong', code=12)
         return self.cleaned_data
 
     def save(self):
+        self.cleaned_data['author'] = self._user
         Answer.objects.create(**self.cleaned_data)
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=256)
+    password = forms.CharField(max_length=256, widget=forms.PasswordInput())
+
+
+class SignupForm(forms.Form):
+    username = forms.CharField(max_length=256)
+    email = forms.EmailField(max_length=256)
+    password = forms.CharField(max_length=256, widget=forms.PasswordInput())
+
+    def save(self):
+        return User.objects.create(**self.cleaned_data)
