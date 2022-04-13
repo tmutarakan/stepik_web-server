@@ -1,9 +1,10 @@
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.models import User
 from django.views.decorators.http import require_GET
 from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout, get_user
 from qa.models import Question, Answer
 from qa.forms import AskForm, AnswerForm, SignupForm, LoginForm
 
@@ -72,12 +73,22 @@ def ask(request):
     return render(request, 'qa/ask.html', {'form': form})
 
 
+def check_login(login, password):
+    try:
+        user = User.objects.get(username=login)
+    except Exception:
+        return None
+    if user.password != password:
+        return None
+    return user
+
+
 def user_login(request):
     error = ''
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(username=username, password=password)
+        user = check_login(username, password)
         url = request.POST.get('continue', '/')
         if user is not None:
             login(request, user)
