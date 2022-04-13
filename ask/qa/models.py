@@ -25,7 +25,7 @@ class Question(models.Model):
         return self.title
 
     def get_url(self):
-        return reverse('single-question', kwargs={'id': self.pk})
+        return f'/question/{self.pk}/'
 
 
 class Answer(models.Model):
