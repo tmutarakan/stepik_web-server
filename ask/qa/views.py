@@ -2,7 +2,9 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_GET
+from django.http import HttpResponseRedirect
 from qa.models import Question, Answer
+from qa.forms import AskForm, AnswerForm
 
 
 # Create your views here.
@@ -38,11 +40,32 @@ def popular_questions(request, *args, **kwargs):
     })
 
 
-@require_GET
 def question(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     answers = Answer.objects.filter(question=question_id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            form.clean()
+            form.save()
+            HttpResponseRedirect('/question/%s/' % question_id)
+    else:
+        form = AnswerForm()
     return render(request, 'qa/question.html', {
         'question': question,
-        'answers': answers
+        'answers': answers,
+        'form': form
     })
+
+
+def ask(request):
+    if request.method == "POST":
+        form = AskForm(request.POST)
+        if form.is_valid():
+            form.clean()
+            post = form.save()
+            url = post.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AskForm()
+    return render(request, 'qa/ask.html', {'form': form})

@@ -1,11 +1,9 @@
-<h1>{{ question.title }}</h1>
-<h2>{{ question.text }}</h2>
-<h2>Answers:</h2>
-{% for answer in answers.all %}
-    <li>{{ answer }}</li>
+<!--{{ form.as_ul }} -->
+{% for e in form.non_field_errors %}
+    <div class="alert alert-danger">{{ e }}</div>
 {% endfor %}
-<h2>Type your answer:</h2>
-<form class="form-horizontal" method="post" action="/question/{{question.id}}/">
+<h2>Ask your question:</h2>
+<form class="form-horizontal" method="post" action="/ask/">
     {% csrf_token %}
     <fieldset>
         {% for field in form %}
